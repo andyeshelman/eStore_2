@@ -8,7 +8,7 @@ from app.caching import cache
 from app.swagger_docs import swaggerui_blueprint
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL') or 'sqlite:///fallback.db'
 app.json.sort_keys = False
 
 db.init_app(app)
