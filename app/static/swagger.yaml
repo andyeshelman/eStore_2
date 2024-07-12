@@ -1,0 +1,63 @@
+swagger: '2.0'
+info:
+  title: "eStore API"
+  version: 1.0.0
+host: 'localhost:5000'
+schemes:
+  - 'http'
+consumes:
+  - 'application/json'
+produces:
+  - 'application/json'
+paths:
+  /token:
+    post:
+      summary: "Token Endpoint"
+      description: "Endpoint for authenticating customers"
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: "login credentials"
+          required: true
+          schema:
+            $ref: '#definitions/TokenCredentials'
+      responses:
+        200:
+          description: "Login successful"
+          schema:
+            $ref: '#definitions/TokenResponse'
+          examples:
+            application/json:
+              token: 'eyJhbXciOiJIUzI1NiIsInR5cCI4IkpXVCJ9.eyJleHAiOdE3MjAyMDI4OTIsImlhdCI6MTcyMDE5OTI5MiwiY3VzdG9tZXJfaWQiOjF9.VFX4LERNh3tymGZkgJmXVIrrRbbKJzmb96ax03Z2Mhq'
+        401:
+          description: "Login unsuccessful"
+          schema:
+            $ref: '#definitions/TokenResponse'
+          examples:
+            application/json:
+              error: "Username and/or password is incorrect"
+
+
+definitions:
+  TokenCredentials:
+    type: 'object'
+    properties:
+      username:
+        type: 'string'
+        description: "The username of the customer"
+      password:
+        type: "string"
+        description: "The password associated with the customer"
+        format: "password"
+    required:
+      - 'username'
+      - 'password'
+  TokenResponse:
+    type: "object"
+    properties:
+      token:
+        type: 'string'
+        description: "Authenticated token"
+      error:
+        type: 'string'
+        description: "The error"
